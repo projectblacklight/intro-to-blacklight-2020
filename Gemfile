@@ -12,7 +12,11 @@ gem 'puma', '~> 4.1'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem 'webpacker', '~> 4.0'
+# gem 'webpacker', '~> 4.0'
+# Use sprockets so we don't have to mess around with webpacker
+gem 'sprockets', '~> 4.0'
+# Use miniracer so people don't need an existing runtime
+gem 'mini_racer'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
