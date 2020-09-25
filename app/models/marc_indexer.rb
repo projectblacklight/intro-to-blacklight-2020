@@ -15,13 +15,13 @@ class MarcIndexer < Blacklight::Marc::Indexer
 
     to_field "id", extract_marc("001"), trim, first_only
     to_field 'marc_ss', get_xml
-    to_field "all_text_timv", extract_all_marc_values do |r, acc|
+    to_field "all_text_timv", extract_all_marc_values do |_r, acc|
       acc.replace [acc.join(' ')] # turn it into a single string
     end
 
     to_field "language_ssim", marc_languages("008[35-37]:041a:041d:")
     to_field "format", get_format
-    to_field "isbn_tsim",  extract_marc('020a', separator: nil) do |rec, acc|
+    to_field "isbn_tsim",  extract_marc('020a', separator: nil) do |_rec, acc|
          orig = acc.dup
          acc.map!{|x| StdNum::ISBN.allNormalizedValues(x)}
          acc << orig
@@ -32,7 +32,7 @@ class MarcIndexer < Blacklight::Marc::Indexer
     to_field 'material_type_ssm', extract_marc('300a'), trim_punctuation
 
     # Title fields
-    #    primary title 
+    #    primary title
     to_field 'title_tsim', extract_marc('245a')
     to_field 'title_ssm', extract_marc('245a', alternate_script: false), trim_punctuation
     to_field 'title_vern_ssm', extract_marc('245a', alternate_script: :only), trim_punctuation
@@ -103,17 +103,17 @@ class MarcIndexer < Blacklight::Marc::Indexer
     # Call Number fields
     to_field 'lc_callnum_ssm', extract_marc('050ab'), first_only
 
-    first_letter = lambda {|rec, acc| acc.map!{|x| x[0]} }
+    first_letter = lambda {|_rec, acc| acc.map!{|x| x[0]} }
     to_field 'lc_1letter_ssim', extract_marc('050ab'), first_only, first_letter, translation_map('callnumber_map')
 
     alpha_pat = /\A([A-Z]{1,3})\d.*\Z/
-    alpha_only = lambda do |rec, acc|
+    alpha_only = lambda do |_rec, acc|
       acc.map! do |x|
         (m = alpha_pat.match(x)) ? m[1] : nil
       end
       acc.compact! # eliminate nils
     end
-    to_field 'lc_alpha_ssim', extract_marc('050a'), alpha_only, first_only 
+    to_field 'lc_alpha_ssim', extract_marc('050a'), alpha_only, first_only
 
     to_field 'lc_b4cutter_ssim', extract_marc('050a'), first_only
 
