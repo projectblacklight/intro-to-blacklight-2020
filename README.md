@@ -16,7 +16,7 @@ https://lucene.apache.org/solr/guide/8_4/solr-system-requirements.html#java-requ
 ### To test your setup.. 
 Clone https://github.com/projectblacklight/intro-to-blacklight-2020
 
-1. Run `$ bin/rails setup`
+1. Run `$ bin/setup`
 2. In a separate terminal window, run `$ bundle exec solr_wrapper` to launch solr
 3. Run `$ bin/rails blacklight:index:seed`
 4. Run `$ bin/rails server`
